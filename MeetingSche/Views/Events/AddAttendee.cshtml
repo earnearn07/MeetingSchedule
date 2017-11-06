@@ -1,0 +1,85 @@
+﻿@model MeetingSche.Models.Event
+
+@{
+    ViewBag.Title = "Details";
+    var profiles = ViewData["Profiles"] as List<MeetingSche.Models.Profile>;
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Event</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+
+    </dl>
+</div>
+
+<div>
+    <br><br><br>
+    <h4>Attendees</h4>
+    <hr />
+ 
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Tel</th>
+            <th>Email</th>
+            <th>Do you want to add this person?</th>
+        </tr>
+        @foreach (var attendee in profiles)
+        {
+            <tr>
+                <td>@Html.ActionLink(attendee.Name, "Details", "Profiles", new { id = attendee.Pid }, null) </td>
+                <td>@Html.Label(attendee.Tel)</td>
+                <td>@Html.Label(attendee.Email)</td>
+                <td>@Html.ActionLink("Add This Person", "Show", "Events", new { id = Model.Eid, pid = attendee.Pid }, null) </td>
+            </tr>
+        }
+    </table>
+
+</div>
+<br><br><br>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Eid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

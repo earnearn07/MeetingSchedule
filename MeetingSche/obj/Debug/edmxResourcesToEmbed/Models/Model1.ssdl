@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="Profiles" EntityType="Model1.Store.Profiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Events" EntityType="Model1.Store.Events" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Show" EntityType="Model1.Store.Show" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Show_Profile" Association="Model1.Store.FK_Show_Profile">
+      <End Role="Profile" EntitySet="Profiles" />
+      <End Role="Show" EntitySet="Show" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Show_Event" Association="Model1.Store.FK_Show_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Show" EntitySet="Show" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Profiles">
+    <Key>
+      <PropertyRef Name="Pid" />
+    </Key>
+    <Property Name="Pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Tel" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Pwd" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Events">
+    <Key>
+      <PropertyRef Name="Eid" />
+    </Key>
+    <Property Name="Eid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Location" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Time" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Note" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Show">
+    <Key>
+      <PropertyRef Name="Profiles_Pid" />
+      <PropertyRef Name="Events_Eid" />
+    </Key>
+    <Property Name="Profiles_Pid" Type="int" Nullable="false" />
+    <Property Name="Events_Eid" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Show_Profile">
+    <End Role="Profile" Type="Model1.Store.Profiles" Multiplicity="1" />
+    <End Role="Show" Type="Model1.Store.Show" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Pid" />
+      </Principal>
+      <Dependent Role="Show">
+        <PropertyRef Name="Profiles_Pid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Show_Event">
+    <End Role="Show" Type="Model1.Store.Show" Multiplicity="*" />
+    <End Role="Event" Type="Model1.Store.Events" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="Eid" />
+      </Principal>
+      <Dependent Role="Show">
+        <PropertyRef Name="Events_Eid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Profiles" EntityType="Model1.Profile" />
+    <EntitySet Name="Events" EntityType="Model1.Event" />
+    <AssociationSet Name="Show" Association="Model1.Show">
+      <End Role="Profile" EntitySet="Profiles" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Profile">
+    <Key>
+      <PropertyRef Name="Pid" />
+    </Key>
+    <Property Name="Pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Tel" Type="String" Nullable="false" />
+    <Property Name="Email" Type="String" Nullable="false" />
+    <Property Name="Pwd" Type="String" Nullable="false" />
+    <NavigationProperty Name="Events" Relationship="Model1.Show" FromRole="Profile" ToRole="Event" />
+  </EntityType>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="Eid" />
+    </Key>
+    <Property Name="Eid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" />
+    <Property Name="Location" Type="String" Nullable="false" />
+    <Property Name="Date" Type="String" Nullable="false" />
+    <Property Name="Time" Type="String" Nullable="false" />
+    <Property Name="Note" Type="String" Nullable="false" />
+    <NavigationProperty Name="Profiles" Relationship="Model1.Show" FromRole="Event" ToRole="Profile" />
+  </EntityType>
+  <Association Name="Show">
+    <End Type="Model1.Profile" Role="Profile" Multiplicity="*" />
+    <End Type="Model1.Event" Role="Event" Multiplicity="*" />
+  </Association>
+</Schema>
