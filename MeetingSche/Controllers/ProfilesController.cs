@@ -123,5 +123,30 @@ namespace MeetingSche.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpPost]
+        public ActionResult Autherize(MeetingSche.Models.Profile userModel)
+        {
+
+            var userDetails = db.Profiles.Where(x => x.Name == userModel.Name && x.Pwd == userModel.Pwd).FirstOrDefault();
+            if (userDetails == null)
+            {
+                return View("Index");
+            }
+            else
+            {
+                Session["userID"] = userDetails.Pid;
+                Session["userName"] = userDetails.Name;
+                return RedirectToAction("Index", "Events");
+            }
+
+        }
+
+        public ActionResult LogOut()
+        {
+            int userId = (int)Session["userID"];
+            Session.Abandon();
+            return RedirectToAction("", "Home", new { area = "" });
+        }
     }
 }
